@@ -1,10 +1,10 @@
-var cardsStack = new Array();
-var players = new Array(); 
+var cardsStack = new Array(); //taken an empty array to push the deck in it
+var players = new Array(); // taken an empty array to push the no. of players
 var cardTypes = ["Spades", "Hearts", "Diamonds", "Clubs"];
 var cardNumbers = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
 var currentPlayer = 0;
 
-function createCardsStack()
+function createCardsStack() // to creat a deck of playing card
 {
     cardsStack = new Array();
     for (var i = 0 ; i < cardNumbers.length; i++)
@@ -17,7 +17,7 @@ function createCardsStack()
             } else if (cardNumbers[i] == "A") {
                 cardValue = 11;
             } else {
-                cardValue = parseInt(cardNumbers[i]);
+                cardValue = parseInt(cardNumbers[i]); // for returning a whole no.
             }
             var card = { CardNumber: cardNumbers[i], CardType: cardTypes[j], CardValue: cardValue };
             cardsStack.push(card);
@@ -25,7 +25,7 @@ function createCardsStack()
     }
 }
 
-function createPlayers(num)
+function createPlayers(num) // to create the players num parameter is taken to give the value 
 {
     players = new Array();
     for(var i = 1; i <= num; i++)
@@ -38,25 +38,25 @@ function createPlayers(num)
 
 function createPlayersView()
 {
-    document.getElementById('players').innerHTML = '';
+    document.getElementById('players').innerHTML = '';  // to create the interface of players
     for(var i = 0; i < players.length; i++)
     {
         var div_player = document.createElement('div');
         var div_playerid = document.createElement('div');
-        var div_hand = document.createElement('div');
+        var div_hand = document.createElement('div'); // creating new div element
         var div_points = document.createElement('div');
 
         div_points.className = 'points';
         div_points.id = 'points_' + i;
-        div_player.id = 'player_' + i;
+        div_player.id = 'player_' + i; // assining the id & class to the new element
         div_player.className = 'player';
         div_hand.id = 'hand_' + i;
 
         div_playerid.innerHTML = 'Player ' + players[i].ID;
         div_player.appendChild(div_playerid);
-        div_player.appendChild(div_hand);
+        div_player.appendChild(div_hand); // appending the new element into one element
         div_player.appendChild(div_points);
-        document.getElementById('players').appendChild(div_player);
+        document.getElementById('players').appendChild(div_player); // targeting players element and appending the new element into it
     }
 }
 
@@ -70,15 +70,15 @@ function shuffle()
         var location2 = Math.floor((Math.random() * cardsStack.length));
         var tmp = cardsStack[location1];
 
-        cardsStack[location1] = cardsStack[location2];
+        cardsStack[location1] = cardsStack[location2]; // a random no. between 0-51 is generated and two card positions are swapped
         cardsStack[location2] = tmp;
     }
 }
 
 function startNewGame()
         {
-            document.getElementById('btnStart').value = 'Restart';
-            document.getElementById("status").style.display="none";
+            document.getElementById('btnStart').value = 'Restart'; //changing the value of start button
+            document.getElementById("status").style.display="none"; //inserting the css style to the status element
             document.getElementById("restartMessage").style.display="none";
 
             document.getElementById("hitMeBtn").disabled = false;
@@ -90,10 +90,10 @@ function startNewGame()
             currentPlayer  = 0;
             createCardsStack();
             shuffle();
-            createPlayers(2);
+            //  createPlayers();
             createPlayersView();
             dealHands();
-            document.getElementById('player_' + currentPlayer).classList.add('active');
+            document.getElementById('player_' + currentPlayer).classList.add('active'); //adding a class to the player elemen
         }
         
 function dealHands()
@@ -107,7 +107,7 @@ function dealHands()
             var card = cardsStack.pop();
             players[j].Hand.push(card);
             renderCard(card, j);
-            updatePoints();
+            updatePoints(); // updating the points according the value of the drawn card
         }
     }
 
@@ -117,11 +117,12 @@ function dealHands()
 function renderCard(card, player)
 {
     var hand = document.getElementById('hand_' + player);
-    hand.appendChild(getCardView(card));
+    hand.appendChild(getCardView(card)); // card interface that is in hand of player
 }
 
 function getCardView(card)
-{
+{    
+    // to create the interface of the card according to the suits&values
     var element = document.createElement('div');
     var icon = '';
     if (card.CardType == 'Hearts')
@@ -134,7 +135,7 @@ function getCardView(card)
     icon = '&clubs;';
     
     element.className = 'card';
-    element.innerHTML = card.CardNumber + '<br/>' + icon;
+    element.innerHTML = card.CardNumber + '<br/>' + icon;  // now card in the player hand will show the suit&value
     return element;
 }
 
@@ -152,7 +153,7 @@ function calculatePointsForPlayer(player)
 
 function updatePoints()
 {
-    for (var i = 0 ; i < players.length; i++)
+    for (var i = 0 ; i < players.length; i++) // to update the points when a player draws more card from the deck
     {
         calculatePointsForPlayer(i);
         document.getElementById('points_' + i).innerHTML = players[i].Points;
@@ -216,7 +217,7 @@ function end()
 
 function check()
 {
-    if (players[currentPlayer].Points > 21)
+    if (players[currentPlayer].Points > 21)  //to check the points if it will be greater than 21 then lost
     {
         document.getElementById('status').innerHTML = 'Player: ' + players[currentPlayer].ID + ' LOST';
         document.getElementById('status').style.display = "inline-block";
@@ -226,7 +227,7 @@ function check()
 
 function updateCardStack()
 {
-    document.getElementById('deckcount').innerHTML = cardsStack.length;
+    document.getElementById('deckcount').innerHTML = cardsStack.length; // update the deck after every card drawn
 }
 
 window.addEventListener('load', function(){
