@@ -8,3 +8,7 @@
 5. If you go over 21 you bust, and the dealer wins regardless of the dealer's hand.
 6. If you are dealt 21 from the start (Ace & 10), you got a blackjack.
 7. Blackjack usually means you win 1.5 the amount of your bet. Depends on the casino.
+
+#DEMO
+
+https://faizan14sid.github.io/BlackJack-Game
